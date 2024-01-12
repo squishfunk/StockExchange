@@ -1,7 +1,9 @@
 package com.example.stockexchangeapp
 
+import MyAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -10,8 +12,20 @@ import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.GsonConverterFactory
+import retrofit2.HttpException
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.create
+import java.io.IOException
+
+const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+
+    private val BASE_URL = "http://api.nbp.pl/api/"
 
     private lateinit var itemList: ArrayList<String>
     private lateinit var adapter: ArrayAdapter<String>
@@ -21,21 +35,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        getAllCurrencies()
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         itemList = ArrayList()
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, itemList)
+        itemList.add("EUR")
+        itemList.add("USD")
+        itemList.add("GBP")
+        adapter = MyAdapter(this, android.R.layout.simple_list_item_1, itemList)
 
         val currencyList: ListView = findViewById(R.id.currencyList)
         currencyList.adapter = adapter
-
-        newItemEditText = findViewById(R.id.newItemEditText)
-
-        val addButton: Button = findViewById(R.id.addButton)
-        addButton.setOnClickListener {
-            addItem()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,5 +84,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getAllCurrencies(){
+        val api = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NbpApi::class.java)
+
+
+        val httpData = api.getCurrencies()
+
+        val x = httpData.enqueue(object : Callback<List<Currency>?> {
+            override fun onResponse(
+                call: Call<List<Currency>?>,
+                response: Response<List<Currency>?>
+            ) {
+                val responseBody = response.body()!!
+
+                for (myData in responseBody){
+
+                }
+            }
+
+            override fun onFailure(call: Call<List<Currency>?>, t: Throwable) {
+                Log.e(TAG, "onFailure: xDDDD", )
+            }
+        })
+
     }
 }

@@ -16,24 +16,6 @@
         android:id="@+id/currencyList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/addButton"
         android:layout_below="@+id/toolbar"
         android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/newItemEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:hint="Dodaj nowy element"/>
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:text="Dodaj"/>
 </RelativeLayout>
