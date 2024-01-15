@@ -13,7 +13,7 @@
 
         <!-- Nazwa waluty -->
         <TextView
-            android:id="@+id/currencyName"
+            android:id="@+id/currencySymbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nazwa waluty"
@@ -21,7 +21,7 @@
 
         <!-- Symbol waluty -->
         <TextView
-            android:id="@+id/currencySymbol"
+            android:id="@+id/currencyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Symbol"
